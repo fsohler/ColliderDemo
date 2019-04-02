@@ -118,7 +118,7 @@ server <- function(input, output) {
        bind_rows(
          lm(outcome_score ~ BP_score + cad_score, data = getSampleData()) %>% tidy() %>% filter(term=="BP_score") %>%
            mutate(term=NULL, model="outcome ~ BP + CAD") %>% select(model, estimate, std.error, p.value),
-         lm(outcome_score ~ BP_score + cad_score, data = getSampleData() %>% filter(cad_score > input$threshold)) %>% 
+         lm(outcome_score ~ BP_score, data = getSampleData() %>% filter(cad_score > input$threshold)) %>% 
            tidy() %>% filter(term=="BP_score") %>%
            mutate(term=NULL, model="outcome ~ BP | CAD cases only") %>% select(model, estimate, std.error, p.value)
        )
